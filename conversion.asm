@@ -5,7 +5,17 @@
 
 .text
 conv:
-    
+    li $t0, 0
+    li $t1, 7
+    li $t2, 0
+    mult $a0, 8
+    mflo $t3
+    sub $t4, $a1, $t3 # $t3 = -8*$a0 + $a1
+
+    loop:
+        beq $t0, $t1
+        add $t2, $t2, $t4
+        addi $t0, 1
 
 main:
 	li $a0, 5
@@ -18,4 +28,5 @@ main:
     syscall
 
 exit:
-	# TODO: Write code to properly exit a SPIM simulation
+	li $v0, 10
+    syscall
