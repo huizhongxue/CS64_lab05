@@ -13,7 +13,7 @@ conv:
     sub $t4, $a1, $t3 # $t3 = -8*$a0 + $a1
 
     loop:
-        beq $t0, $t1
+        beq $t0, $t1, loop
         add $t2, $t2, $t4
         addi $t0, 1
 
