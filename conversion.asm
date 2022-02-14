@@ -5,17 +5,28 @@
 
 .text
 conv:
-    li $t0, 0
-    li $t1, 7
-    li $t2, 0
-    mult $a0, 8
-    mflo $t3
-    sub $t4, $a1, $t3 # $t3 = -8*$a0 + $a1
-
-    loop:
-        beq $t0, $t1, loop
-        add $t2, $t2, $t4
-        addi $t0, 1
+    li $t0, 0 # i = 0
+    li $t1, 0 # sum = 0
+    li $t2, 7 # max index
+    move $t3, $a0 # x
+    move $t4, $a1 # y
+    li $t5, 8 # multiply x by 8
+    li $t6, 2 # x >= 2
+    for: bgt $t0, $t2, end_for
+    mult $t3, $t5
+    mflo $t7
+    sub $t1, $t1, $t7
+    add $t1, $t1, $t4
+    bge $t3, $t6, if
+    addi $t3, $t3, 1
+    addi $t0, $t0, 1
+    j for
+    if: addi $t4, $t4, -1
+    addi $t3, $t3, 1
+    addi $t0, $t0, 1
+    j for
+    end_for: move $v0, $t1
+    jr $ra
 
 main:
 	li $a0, 5
